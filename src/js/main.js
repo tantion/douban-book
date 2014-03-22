@@ -13,6 +13,6 @@ define(function(require, exports, module) {
     require('lib/tipsy/jquery.tipsy.js')($);
 
     // 初始化模块
-    require('js/bt-search').init();
+    require('js/search').init();
 
 });

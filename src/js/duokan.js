@@ -13,7 +13,7 @@ define(function(require, exports, module) {
     function searchTitle (title) {
         var dfd = new $.Deferred(),
             items = [],
-            url = 'http://btmee.net/search/?q=#keyword#';
+            url = 'http://www.duokan.com/search/#keyword#/1';
 
         url = url.replace('#keyword#', encodeURIComponent(title));
 
@@ -27,8 +27,7 @@ define(function(require, exports, module) {
         } else {
             $.ajax({
                 url: url,
-                type: 'POST',
-                data: {q: title, sname: ''},
+                type: 'GET',
                 timeout: timeout,
                 xhrFields: {
                     withCredentials: true
@@ -37,35 +36,25 @@ define(function(require, exports, module) {
             .done(function (html) {
                 html = html.replace(/src=/ig, 'data-src=');
                 var $html = $($.parseHTML(html)),
-                    $items = $html.find('tbody .qvodView'),
+                    $items = $html.find('.j-list .j-bookitm'),
                     items = [];
 
                 items = $.map($items, function (item) {
-                    var $item = $(item).closest('tbody'),
-                        cat = $.trim($item.find('.cat').text()),
-                        name = $.trim($item.find('.name').text()),
-                        seed = $.trim($item.find('.seed').text()),
-                        mag = $.trim($item.find('.magDown').attr('href')),
-                        ed2k = $.trim($item.find('.ed2kDown').attr('ed2k')),
-                        title = '',
-                        href = '';
+                    var $item = $(item),
+                        id = $item.data('id'),
+                        cover = $item.find('.book .cover img').data('src'),
+                        $title = $item.find('.info .title'),
+                        name = $.trim($title.text()),
+                        href = $title.attr('href');
 
-                    if (cat) {
-                        title = '[' + cat + ']';
+                    if (name.indexOf(title) > -1) {
+                        return {
+                            href: 'http://www.duokan.com' + href,
+                            title: name,
+                            cover: cover,
+                            id: id
+                        };
                     }
-                    if (seed) {
-                        title += '[<strong>' + seed + '</strong>]';
-                    }
-
-                    title += name;
-                    href = mag ? mag : ed2k;
-
-                    return {
-                        href: href,
-                        ed2k: ed2k,
-                        mag: mag,
-                        title: title
-                    };
                 });
 
                 ITEMS_CACHE[url] = items;
@@ -84,12 +73,12 @@ define(function(require, exports, module) {
     }
 
     var tmpl = '{{#items}}' +
-               '<dl class="movie-improve-bt-dl">' +
-                  '<dt class="movie-improve-bt-title">' +
-                      '<a title="请右键复制下载地址或者点击下载。" href="{{href}}">{{&title}}</a>' +
+               '<dl class="book-improve-bt-dl">' +
+                  '<dt class="book-improve-bt-title">' +
+                      '<a title="在线阅读" target="_blank" href="http://www.duokan.com/reader/www/app.html?id={{id}}">{{&title}}</a>' +
                   '</dt>' +
                   '{{#files}}' +
-                  '<dd class="movie-improve-bt-desc">{{&title}}</dd>' +
+                  '<dd class="book-improve-bt-desc">{{&title}}</dd>' +
                   '{{/files}}' +
                '</dl>' +
                '{{/items}}';
@@ -106,12 +95,8 @@ define(function(require, exports, module) {
         return $content;
     }
 
-    function subjectTitle (subject) {
-        return subject.title2 || subject.title || '';
-    }
-
     function search (subject) {
-        var title = subjectTitle(subject),
+        var title = subject.title,
             dfd = new $.Deferred();
 
         if (title) {
@@ -119,7 +104,7 @@ define(function(require, exports, module) {
 
             searchTitle(title)
             .done(function (items) {
-                dfd.resolve(renderItems(items), items.length);
+                dfd.resolve(renderItems(items), items.length, items);
             })
             .fail(function () {
                 dfd.reject();
@@ -132,7 +117,7 @@ define(function(require, exports, module) {
     }
 
     module.exports = {
-        name: 'BTmee',
+        name: '多看阅读',
         search: search
     };
 });

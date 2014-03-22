@@ -27,7 +27,7 @@
 
             extendHeaders(responseHeaders, {
                 name: 'Access-Control-Allow-Origin',
-                value: 'http://movie.douban.com'
+                value: 'http://book.douban.com'
             });
             extendHeaders(responseHeaders, {
                 name: 'Access-Control-Allow-Credentials',
@@ -39,20 +39,7 @@
             };
         },
         {urls: [
-            "http://www.bttiantang.com/s.php?*",
-            "http://www.bttiantang.com/subject/*",
-            "http://www.bttiantang.com/download.php*",
-            "http://yun.baidu.com/share/link*",
-            "http://www.fangying.tv/category/key_*",
-            "http://www.fangying.tv/f_*",
-            "http://www.baidu.com/s*",
-            "http://imax.im/api/movies/show.json*",
-            "http://imax.im/movies/*",
-            "http://btmee.net/search*",
-            "http://www.shooter.cn/xml/sub/*",
-            "http://www.shooter.cn/files/file3.php*",
-            "http://www.shooter.cn/a/loadmain.js",
-            "http://www.shooter.cn/search*"
+            "http://www.duokan.com/search/*"
         ]},
         ["blocking", "responseHeaders"]
     );

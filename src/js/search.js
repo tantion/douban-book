@@ -1,6 +1,6 @@
 //
-// movie subject improve
-// http://movie.douban.com/subject/:id
+// book subject improve
+// http://book.douban.com/subject/:id
 //
 define(function(require, exports, module) {
     "use strict";
@@ -9,26 +9,32 @@ define(function(require, exports, module) {
         dialog = null,
         m = require('mustache'),
         providers = [
-            require('js/bt-tiantang'),
-            require('js/bt-imax'),
-            require('js/bt-fangying'),
-            require('js/bt-mee'),
-            require('js/bt-baidu'),
-            require('js/bt-shooter')
+            require('js/duokan')
         ];
 
     function serializeSubject () {
         var subject = {},
             $content = $('#content'),
             $info = $('#info'),
-            title = $.trim($('#content .related-info h2').text());
+            info = $.trim($info.text()),
+            infos = info.split(/([^ \n]+):/),
+            len = infos.length,
+            maps = {};
 
-        subject.title2 = title.replace(/^(.+)的剧情简介.*$/, '$1');
-        subject.title = $.trim($content.find('[property="v:itemreviewed"]').text());
+        $.each(infos, function (index, item) {
+            var key, value;
+            if (index % 2 === 1 && index < len - 1) {
+                key = $.trim(item);
+                value = $.trim(infos[index + 1].replace(/\n/g, '').replace(/ {2,}/g, ' '));
+                maps[key] = value;
+            }
+        });
+
+        subject.title = $.trim($('#wrapper').find('[property="v:itemreviewed"]').text());
         subject.stars = parseFloat($content.find('[property="v:average"]').text());
-        subject.actors = $.trim($info.find('[rel="v:starring"]').parent().text());
-        subject.year = parseInt($.trim($content.find('.year').text()).replace(/\((\d+)\)/, '$1'), 10);
-        subject.imdb = $.trim($info.find('a[href^="http://www.imdb.com/title/tt"]').text());
+        subject.author = maps.hasOwnProperty('作者') ? maps['作者'] : '';
+        subject.year = parseInt(maps.hasOwnProperty('出版年') ? maps['出版年'] : 0, 10);
+        subject.isbn = parseInt(maps.hasOwnProperty('ISBN') ? maps.ISBN : 0, 10);
 
         return subject;
     }
@@ -49,7 +55,7 @@ define(function(require, exports, module) {
             $count.html(count || 0);
         })
         .fail(function () {
-            $target.html('没有搜到相关的bt种子，切换一下其他搜索试试。');
+            $target.html('没有搜到相关的电子书，切换一下其他搜索试试。');
             $count.html(0);
         });
     }
@@ -66,16 +72,16 @@ define(function(require, exports, module) {
     }
 
     function initDialog () {
-        var tmpl = '<div class="movie-improve-bt-container">' +
-                       '<div class="movie-improve-nav-container">' +
+        var tmpl = '<div class="book-improve-bt-container">' +
+                       '<div class="book-improve-nav-container">' +
                            '{{#tabs}}' +
                            '{{#index}}&nbsp;|&nbsp;{{/index}}' +
-                           '<a class="movie-improve-nav" data-index="{{index}}" href="#movie-improve-tab-{{index}}">{{name}} (<span>...</span>)</a>' +
+                           '<a class="book-improve-nav" data-index="{{index}}" href="#book-improve-tab-{{index}}">{{name}} (<span>...</span>)</a>' +
                            '{{/tabs}}' +
                        '</div>' +
-                       '<div class="movie-improve-tab-container">' +
+                       '<div class="book-improve-tab-container">' +
                            '{{#tabs}}' +
-                           '<div class="movie-improve-tab" id="movie-improve-tab-{{index}}"></div>' +
+                           '<div class="book-improve-tab" id="book-improve-tab-{{index}}"></div>' +
                            '{{/tabs}}' +
                        '</div>' +
                    '</div>',
@@ -93,7 +99,7 @@ define(function(require, exports, module) {
         $content = $(m.render(tmpl, {tabs: tabs}));
 
         $content
-        .on('click', '.movie-improve-nav', function (evt) {
+        .on('click', '.book-improve-nav', function (evt) {
             evt.preventDefault();
 
             var $nav = $(this);
@@ -101,7 +107,7 @@ define(function(require, exports, module) {
             activeSearch($nav, $content);
             startSearch(subject, $nav, $content);
         })
-        .find('.movie-improve-nav')
+        .find('.book-improve-nav')
         .each(function (index) {
             var $nav = $(this);
 
@@ -112,28 +118,26 @@ define(function(require, exports, module) {
             startSearch(subject, $nav, $content);
         });
 
-        dialog.setTitle(subject.title2 + ' BT地址列表');
+        dialog.setTitle(subject.title + ' 电子书列表');
 
         return $content;
     }
 
     function init () {
-        if (!location.href.match(/^http:\/\/movie\.douban\.com\/subject\/\d+/)) {
+        if (!location.href.match(/^http:\/\/book\.douban\.com\/subject\/\d+/)) {
             return;
         }
 
-        Do.ready('dialog', function () {
-            /* global dui: true */
-            var $btn = $('<div><span class="pl">BT地址:</span> <a href="javascript:">打开列表</a></div>').appendTo('#info').find('a');
+        /* global dui: true */
+        var $btn = $('<div><span class="pl">电子书:</span> <a href="javascript:">查看列表</a></div>').appendTo('#info').find('a');
 
-            $btn.on('click', function (evt) {
-                evt.preventDefault();
-                if (!dialog) {
-                    dialog = dui.Dialog({width: 700}, true);
-                }
-                dialog.setContent(initDialog());
-                dialog.open();
-            });
+        $btn.on('click', function (evt) {
+            evt.preventDefault();
+            if (!dialog) {
+                dialog = dui.Dialog({width: 700}, true);
+            }
+            dialog.setContent(initDialog());
+            dialog.open();
         });
     }
 
