@@ -11,7 +11,8 @@ define(function(require, exports, module) {
         providers = [
             require('js/duokan'),
             require('js/ishare'),
-            require('js/ppurl')
+            require('js/ppurl'),
+            require('js/baidu')
         ];
 
     function serializeSubject () {

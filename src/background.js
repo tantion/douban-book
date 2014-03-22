@@ -41,6 +41,7 @@
         {urls: [
             "http://www.duokan.com/search/*",
             "http://ishare.iask.sina.com.cn/search.php?key=*",
+            "http://www.baidu.com/s?*",
             "http://www.ppurl.com/?s=*"
         ]},
         ["blocking", "responseHeaders"]
