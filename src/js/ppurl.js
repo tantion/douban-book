@@ -1,6 +1,6 @@
 //
-// bt 搜索提供者
-// http://yun.baidu.com
+// 皮皮书屋
+// http://www.ppurl.com
 //
 define(function(require, exports, module) {
     "use strict";
@@ -13,7 +13,7 @@ define(function(require, exports, module) {
     function searchTitle (title) {
         var dfd = new $.Deferred(),
             items = [],
-            url = 'http://www.baidu.com/s?wd=#keyword#%20torrent%20site%3Apan.baidu.com';
+            url = 'http://www.ppurl.com/?s=#keyword#';
 
         url = url.replace('#keyword#', encodeURIComponent(title));
 
@@ -36,33 +36,22 @@ define(function(require, exports, module) {
             .done(function (html) {
                 html = html.replace(/src=/ig, 'data-src=');
                 var $html = $($.parseHTML(html)),
-                    $items = $html.find('.c-container'),
+                    $items = $html.find('#search-book-list .category-it'),
                     items = [];
 
-                $items.each(function () {
-                    var $item = $(this),
-                        $link = $item.find('.t a').eq(0),
-                        $desc = $item.find('.c-abstract').eq(0),
-                        title = $.trim($desc.text()),
-                        size = '',
-                        matches = title.match(/文件名:(.+) 文件大小:(.+) 分享者/);
+                items = $.map($items, function (item) {
+                    var $item = $(item),
+                        $cover = $item.find('.cover'),
+                        $link = $cover.find('a'),
+                        cover = $link.find('img').data('src'),
+                        title = $link.attr('title'),
+                        href = $link.attr('href');
 
-                    if (matches && matches.length > 2) {
-                        title = matches[1];
-                        size = matches[2];
-                        if (size) {
-                            title += ' ' + size;
-                        }
-                    } else {
-                        title = '';
-                    }
-
-                    if (title) {
-                        items.push({
-                            href: $link.attr('href'),
-                            title: title
-                        });
-                    }
+                    return {
+                        href: href,
+                        title: title,
+                        cover: cover
+                    };
                 });
 
                 ITEMS_CACHE[url] = items;
@@ -81,12 +70,12 @@ define(function(require, exports, module) {
     }
 
     var tmpl = '{{#items}}' +
-               '<dl class="movie-improve-bt-dl">' +
-                  '<dt class="movie-improve-bt-title">' +
-                      '<a title="点击打开种子下载页面" target="_blank" href="{{href}}">{{title}}</a>' +
+               '<dl class="book-improve-bt-dl">' +
+                  '<dt class="book-improve-bt-title">' +
+                      '<a title="打开下载页面（需要登录）" target="_blank" href="{{href}}">{{&title}}</a>' +
                   '</dt>' +
                   '{{#files}}' +
-                  '<dd class="movie-improve-bt-desc">{{&title}}</dd>' +
+                  '<dd class="book-improve-bt-desc">{{&title}}</dd>' +
                   '{{/files}}' +
                '</dl>' +
                '{{/items}}';
@@ -103,12 +92,8 @@ define(function(require, exports, module) {
         return $content;
     }
 
-    function subjectTitle (subject) {
-        return subject.title2 || subject.title || '';
-    }
-
     function search (subject) {
-        var title = subjectTitle(subject),
+        var title = subject.title,
             dfd = new $.Deferred();
 
         if (title) {
@@ -116,7 +101,7 @@ define(function(require, exports, module) {
 
             searchTitle(title)
             .done(function (items) {
-                dfd.resolve(renderItems(items), items.length);
+                dfd.resolve(renderItems(items), items.length, items);
             })
             .fail(function () {
                 dfd.reject();
@@ -129,7 +114,7 @@ define(function(require, exports, module) {
     }
 
     module.exports = {
-        name: '百度云',
+        name: '皮皮书屋',
         search: search
     };
 });

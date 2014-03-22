@@ -39,7 +39,9 @@
             };
         },
         {urls: [
-            "http://www.duokan.com/search/*"
+            "http://www.duokan.com/search/*",
+            "http://ishare.iask.sina.com.cn/search.php?key=*",
+            "http://www.ppurl.com/?s=*"
         ]},
         ["blocking", "responseHeaders"]
     );

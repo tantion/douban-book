@@ -9,7 +9,9 @@ define(function(require, exports, module) {
         dialog = null,
         m = require('mustache'),
         providers = [
-            require('js/duokan')
+            require('js/duokan'),
+            require('js/ishare'),
+            require('js/ppurl')
         ];
 
     function serializeSubject () {

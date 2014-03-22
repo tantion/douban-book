@@ -1,6 +1,6 @@
 //
-// 多看阅读
-// http://www.duokan.com
+// 爱问资料分享
+// http://ishare.iask.sina.com.cn
 //
 define(function(require, exports, module) {
     "use strict";
@@ -13,7 +13,7 @@ define(function(require, exports, module) {
     function searchTitle (title) {
         var dfd = new $.Deferred(),
             items = [],
-            url = 'http://www.duokan.com/search/#keyword#/1';
+            url = 'http://ishare.iask.sina.com.cn/search.php?key=#keyword#&format=txt%7Epdf%7Ehtm%7Erar&sort=digit_down';
 
         url = url.replace('#keyword#', encodeURIComponent(title));
 
@@ -30,29 +30,43 @@ define(function(require, exports, module) {
                 type: 'GET',
                 timeout: timeout,
                 xhrFields: {
-                    withCredentials: true
+                    withCredentials: false
                 }
             })
             .done(function (html) {
                 html = html.replace(/src=/ig, 'data-src=');
                 var $html = $($.parseHTML(html)),
-                    $items = $html.find('.j-list .j-bookitm'),
+                    $items = $html.find('table td.r1'),
                     items = [];
 
                 items = $.map($items, function (item) {
                     var $item = $(item),
-                        id = $item.data('id'),
-                        cover = $item.find('.book .cover img').data('src'),
-                        $title = $item.find('.info .title'),
-                        name = $.trim($title.text()),
-                        href = $title.attr('href');
+                        $header = $item.find('.cb'),
+                        $link = $header.find('a'),
+                        desc = $.trim($item.find('.gray').text()),
+                        price = desc.match(/.*下载需积分(\d+)分.*/),
+                        size = desc.match(/.*大小:([\w\.]+) \|.*/),
+                        cover = $header.find('img').data('src') || '',
+                        type = cover.replace(/.*\/(\w+)\.gif/, '$1'),
+                        title = $.trim($link.text()),
+                        href = $link.attr('href') || '',
+                        id = href.replace(/.*\/(\d+)\.html$/, '$1');
 
-                    if (name.indexOf(title) > -1) {
+                    if (price && price.length) {
+                        price = price[1];
+                    }
+                    if (size && size.length) {
+                        size = size[1];
+                    }
+
+                    if (id) {
                         return {
-                            href: 'http://www.duokan.com' + href,
-                            title: name,
-                            cover: cover,
-                            id: id
+                            href: href,
+                            type: type,
+                            size: size,
+                            price: price,
+                            id: id,
+                            title: title
                         };
                     }
                 });
@@ -75,7 +89,13 @@ define(function(require, exports, module) {
     var tmpl = '{{#items}}' +
                '<dl class="book-improve-bt-dl">' +
                   '<dt class="book-improve-bt-title">' +
-                      '<a title="在线阅读" target="_blank" href="http://www.duokan.com/reader/www/app.html?id={{id}}">{{&title}}</a>' +
+                      '<a title="打开下载页面{{#price}}（需要登录）{{/price}}" target="_blank" href="http://ishare.iask.sina.com.cn/download/explain.php?fileid={{id}}">' +
+                        '{{#type}}[{{type}}]{{/type}}' +
+                        '{{#price}}[{{price}}积分]{{/price}}' +
+                        '{{^price}}[免费]{{/price}}' +
+                        '{{#size}}[{{size}}]{{/size}}' +
+                        '{{&title}}' +
+                      '</a>' +
                   '</dt>' +
                   '{{#files}}' +
                   '<dd class="book-improve-bt-desc">{{&title}}</dd>' +
@@ -117,7 +137,7 @@ define(function(require, exports, module) {
     }
 
     module.exports = {
-        name: '多看阅读',
+        name: '爱问分享',
         search: search
     };
 });
