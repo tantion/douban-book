@@ -1,0 +1,43 @@
+{
+    "manifest_version": 2,
+
+    "name": "豆瓣电影助手",
+    "description": "让豆瓣电影支持下载bt种子。",
+    "version": "1.1.1",
+
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "http://*.douban.com/",
+        "http://*.baidu.com/",
+        "http://*.bttiantang.com/",
+        "http://btmee.net/",
+        "http://imax.im/",
+        "http://www.fangying.tv/",
+        "http://www.shooter.cn/"
+     ],
+    "icons": {
+        "128": "icon.png",
+        "16": "icon.png",
+        "32": "icon.png",
+        "48": "icon.png"
+    },
+    "web_accessible_resources": [
+        "config.js",
+        "seajs/*.*",
+        "js/*.*",
+        "lib/*.*",
+        "images/*.*"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "content_scripts": [{
+        "matches": ["http://movie.douban.com/*"],
+        "css":     ["bootstrap.css"],
+        "js":      ["bootstrap.js"],
+        "run_at":  "document_end"
+    }]
+}
