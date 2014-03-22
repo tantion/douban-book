@@ -2,7 +2,7 @@
 // 爱问资料分享
 // http://ishare.iask.sina.com.cn
 //
-define(function(require, exports, module) {
+define('js/ishare', ['jquery', 'mustache'], function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),

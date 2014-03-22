@@ -2,7 +2,8 @@
 // book subject improve
 // http://book.douban.com/subject/:id
 //
-define(function(require, exports, module) {
+define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
+    function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),

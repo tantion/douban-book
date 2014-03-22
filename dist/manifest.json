@@ -17,15 +17,10 @@
         "48": "icon.png"
     },
     "web_accessible_resources": [
-        "config.js",
-        "seajs/*.*",
-        "js/*.*",
-        "lib/*.*",
         "images/*.*"
     ],
     "background": {
         "scripts": [
-            "background.js"
         ]
     },
     "content_scripts": [{

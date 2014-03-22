@@ -1,0 +1,35 @@
+.book-improve-bt-desc {
+    font-size: 11px;
+    padding-left: 2em;
+}
+.book-improve-bt-title strong,
+.book-improve-bt-desc strong {
+    font-weight: bold;
+}
+.book-improve-bt-dl {
+    margin-bottom: 6px;
+}
+
+.book-improve-nav.active {
+    color: black;
+}
+.book-improve-nav.active:hover {
+    background: transparent;
+}
+.book-improve-tab {
+    display: none;
+}
+.book-improve-tab.active {
+    display: block;
+}
+
+.book-improve-nav-container {
+    font-size: 13px;
+    border-bottom: 1px solid silver;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+}
+.book-improve-tab-container {
+    height: 400px;
+    overflow: auto;
+}

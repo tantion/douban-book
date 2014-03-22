@@ -13,42 +13,29 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;' +
       ' Licensed <%= pkg.license %> */\n',
     // Task configuration.
-    seajs_build: {
-      options: {
-        outputPath: ".",
-        seajsBasePath: "src/js",
-        path: ".",
-        scheme: null,
-        alias: null,
-        resolveID: null,
-        recursive: true,
-        buildType: "exclude_merge"
-      },
-      all: {
-        options: {
-          path : "."
-        },
-        files: [{
-          src: "js/main.js",
-          dest: "js/all.js",
-          filter: "isFile",
-          concatDeps: true
-        }]
-      }
-    },
     concat: {
       options: {
         banner: '<%= banner %>',
         separator: '\n',
         stripBanners: true
       },
-      dist: {
+      js: {
         src: [
           'src/seajs/sea-debug.js',
-          'src/config.js',
-          'src/js/all.js'
+          'src/lib/*.js',
+          'src/lib/tipsy/jquery.tipsy.js',
+          'src/js/app.js',
+          'src/js/*.js',
+          'src/js/main.js'
         ],
         dest: 'src/bootstrap.js'
+      },
+      css: {
+        src: [
+          'src/css/*.css',
+          'src/lib/tipsy/tipsy.css'
+        ],
+        dest: 'src/bootstrap.css'
       }
     },
     replace: {
@@ -71,8 +58,7 @@ module.exports = function(grunt) {
           ]
         },
         files: {
-          'src/manifest.json': 'src/manifest.json',
-          'src/config.js': 'src/config.js'
+          'src/manifest.json': 'src/manifest.json'
         }
       }
     },
@@ -150,7 +136,6 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-replace');
-  grunt.loadNpmTasks('grunt-seajs-build');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -161,6 +146,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-zip');
 
   // Default task.
-  grunt.registerTask('default', ['seajs_build', 'replace', 'clean', 'copy', 'jshint', 'concat', 'uglify', 'cssmin', 'zip']);
+  grunt.registerTask('default', ['replace', 'clean', 'copy', 'jshint', 'concat', 'uglify', 'cssmin', 'zip']);
 
 };

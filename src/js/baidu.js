@@ -2,7 +2,7 @@
 // 百度云
 // http://yun.baidu.com
 //
-define(function(require, exports, module) {
+define('js/baidu', ['jquery', 'mustache'], function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),
