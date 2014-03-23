@@ -1,7 +1,16 @@
+.book-improve-bt-container a {
+    color: #37a;
+}
+.book-improve-bt-container a:hover {
+    background-color: #37a;
+    color: white;
+}
+
 .book-improve-bt-desc {
     font-size: 11px;
     padding-left: 2em;
 }
+
 .book-improve-bt-title strong,
 .book-improve-bt-desc strong {
     font-weight: bold;
@@ -10,12 +19,13 @@
     margin-bottom: 6px;
 }
 
-.book-improve-nav.active {
+.book-improve-bt-container .book-improve-nav.active {
     color: black;
 }
-.book-improve-nav.active:hover {
+.book-improve-bt-container .book-improve-nav.active:hover {
     background: transparent;
 }
+
 .book-improve-tab {
     display: none;
 }

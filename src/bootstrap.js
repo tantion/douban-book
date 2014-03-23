@@ -13162,6 +13162,14 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
         return subject;
     }
 
+    function serializeEbook () {
+        var subject = {};
+
+        subject.title = $.trim($('.article-title').text());
+
+        return subject;
+    }
+
     function startSearch (subject, $nav, $content) {
         var index = $nav.data('index'),
             $target = $content.find($nav.attr('href')),
@@ -13194,7 +13202,7 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
         $target.addClass('active');
     }
 
-    function initDialog () {
+    function initDialog (subject) {
         var tmpl = '<div class="book-improve-bt-container">' +
                        '<div class="book-improve-nav-container">' +
                            '{{#tabs}}' +
@@ -13208,7 +13216,6 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
                            '{{/tabs}}' +
                        '</div>' +
                    '</div>',
-            subject = serializeSubject(),
             tabs = null,
             $content = null;
 
@@ -13246,26 +13253,49 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
         return $content;
     }
 
-    function init () {
-        if (!location.href.match(/^http:\/\/book\.douban\.com\/subject\/\d+/)) {
-            return;
+    function openDialog (subject) {
+        /* global dui: true */
+
+        if (!dialog) {
+            dialog = dui.Dialog({nodeId: 'book-improve-dialog', width: 700}, true);
         }
 
-        /* global dui: true */
-        var $btn = $('<div><span class="pl">电子书:</span> <a href="javascript:">查看列表</a></div>').appendTo('#info').find('a');
+        dialog.setContent(initDialog(subject));
+        dialog.open();
+    }
+
+    function initSubject () {
+        var $btn = $('<div><span class="pl">电子书:</span> <a href="javascript:">查看列表</a></div>')
+                   .appendTo('#info').find('a'),
+            subject = serializeSubject();
 
         $btn.on('click', function (evt) {
             evt.preventDefault();
-            if (!dialog) {
-                dialog = dui.Dialog({nodeId: 'book-improve-dialog', width: 700}, true);
-            }
-            dialog.setContent(initDialog());
-            dialog.open();
+            openDialog(subject);
+        });
+    }
+
+    function initEbook () {
+        var $btn = $('<p><span class="label">电子书</span><a href="javascript:">查看列表</a></p>')
+                   .appendTo('.article-meta').find('a').css({fontSize: '12px'}),
+            subject = serializeEbook();
+
+        $btn.on('click', function (evt) {
+            evt.preventDefault();
+            openDialog(subject);
         });
     }
 
     module.exports = {
-        init: init
+        init: function () {
+            var href = location.href;
+            if (href.match(/^http:\/\/book\.douban\.com\/subject\/\d+/)) {
+                initSubject();
+            }
+            else if (href.match(/^http:\/\/read\.douban\.com\/ebook\/\d+/)) {
+                initEbook();
+            }
+        }
     };
 });
 
