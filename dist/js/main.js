@@ -1,1 +1,1 @@
-define(function(require){"use strict";var a=require("jquery");require("lib/tipsy/jquery.tipsy.js")(a),require("js/search").init()});
+define("js/main",["jquery","lib/tipsy/jquery.tipsy.js"],function(require){"use strict";var a=require("jquery");require("lib/tipsy/jquery.tipsy.js")(a),require("js/search").init()});

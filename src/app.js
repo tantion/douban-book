@@ -1,7 +1,6 @@
 //
 // seajs  jquery
 //
-
 define('jquery', [], function (require, exports, module) {
     "use strict";
 
@@ -34,3 +33,6 @@ define('async', [], function (require, exports, module) {
 
     module.exports = window.async;
 });
+
+// main
+seajs.use('js/main');

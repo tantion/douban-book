@@ -23,17 +23,18 @@ module.exports = function(grunt) {
         src: [
           'src/seajs/sea-debug.js',
           'src/lib/*.js',
+          'src/lib/douban/dialog.js',
           'src/lib/tipsy/jquery.tipsy.js',
-          'src/js/app.js',
           'src/js/*.js',
-          'src/js/main.js'
+          'src/app.js'
         ],
         dest: 'src/bootstrap.js'
       },
       css: {
         src: [
           'src/css/*.css',
-          'src/lib/tipsy/tipsy.css'
+          'src/lib/tipsy/tipsy.css',
+          'src/lib/douban/dialog.css'
         ],
         dest: 'src/bootstrap.css'
       }
@@ -76,7 +77,10 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },
       dev: {
-        src: 'src/js/**/*.js'
+        src: [
+          'src/js/**/*.js',
+          'src/app.js'
+        ]
       },
       dist: {
         src: 'dist/js/**/*.js'
@@ -129,7 +133,7 @@ module.exports = function(grunt) {
       },
       devjs: {
         files: '<%= jshint.dev.src %>',
-        tasks: ['jshint:dev']
+        tasks: ['jshint:dev', 'concat']
       }
     }
   });

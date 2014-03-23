@@ -138,7 +138,7 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
         $btn.on('click', function (evt) {
             evt.preventDefault();
             if (!dialog) {
-                dialog = dui.Dialog({width: 700}, true);
+                dialog = dui.Dialog({nodeId: 'book-improve-dialog', width: 700}, true);
             }
             dialog.setContent(initDialog());
             dialog.open();
