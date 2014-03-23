@@ -4,6 +4,9 @@ A chrome extension for Douban Movie
 
 ## Change Log
 
+- v0.2.0 - March 23 2014
+    - read.douban.com/ebook/\d+ 添加打开入口
+
 - v0.1.0 - March 23 2014
     - 接入爱问、多看，皮皮书屋的搜索
     - 更好的插件接入方式，终于不用管跨域的问题的了
