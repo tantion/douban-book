@@ -4,17 +4,7 @@ A chrome extension for Douban Movie
 
 ## Change Log
 
-- v1.1.0 - March 19 2014
-    - 添加 www.fangying.tv 的种子搜索
-    - 优化搜索结果显示，能同时显示结果
-
-- v1.0.1 - March 10 2014
-    - 添加 www.fangying.tv 的种子搜索
-    - 添加 btmee.net 的种子搜索
-    - 添加 imax.im 下载地址的搜索
-    - 添加 shooter.cn 下载地字幕搜索
-    - refactor search
-
-- v0.5.0 - March 9 2014
-    - 从 www.bttiantang.com 加载种子地址
-    - 百度云加载下载地址
+- v0.1.0 - March 23 2014
+    - 接入爱问、多看，皮皮书屋的搜索
+    - 更好的插件接入方式，终于不用管跨域的问题的了
+    - 好犀利啊，插件和原网站的 window 对象无法互相调用，但是操作的都是同一个 DOM。
