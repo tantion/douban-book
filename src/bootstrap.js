@@ -1,4 +1,4 @@
-/*! douban-book-improve - v0.2.0 - 2014-03-23
+/*! douban-book-improve - v0.3.0 - 2014-04-15
 * https://github.com/tantion/douban-book
 * Copyright (c) 2014 tantion; Licensed MIT */
 (function(global, undefined) {
@@ -12580,7 +12580,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 // 百度云
 // http://yun.baidu.com
 //
-define('js/baidu', ['jquery', 'mustache'], function(require, exports, module) {
+define('js/baidu', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),
@@ -12712,7 +12712,7 @@ define('js/baidu', ['jquery', 'mustache'], function(require, exports, module) {
 // 多看阅读
 // http://www.duokan.com
 //
-define('js/duokan', ['jquery', 'mustache'], function(require, exports, module) {
+define('js/duokan', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),
@@ -12836,7 +12836,7 @@ define('js/duokan', ['jquery', 'mustache'], function(require, exports, module) {
 // 爱问资料分享
 // http://ishare.iask.sina.com.cn
 //
-define('js/ishare', ['jquery', 'mustache'], function(require, exports, module) {
+define('js/ishare', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),
@@ -12981,7 +12981,7 @@ define('js/ishare', ['jquery', 'mustache'], function(require, exports, module) {
 //
 
 // 所有模块都通过 define 来定义
-define('js/main', ['jquery', 'lib/tipsy/jquery.tipsy.js'], function(require, exports, module) {
+define('js/main', function(require, exports, module) {
     "use strict";
 
     // 通过 require 引入依赖
@@ -13000,7 +13000,7 @@ define('js/main', ['jquery', 'lib/tipsy/jquery.tipsy.js'], function(require, exp
 // 皮皮书屋
 // http://www.ppurl.com
 //
-define('js/ppurl', ['jquery', 'mustache'], function(require, exports, module) {
+define('js/ppurl', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),
@@ -13121,8 +13121,7 @@ define('js/ppurl', ['jquery', 'mustache'], function(require, exports, module) {
 // book subject improve
 // http://book.douban.com/subject/:id
 //
-define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
-    function(require, exports, module) {
+define('js/search', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),
@@ -13289,10 +13288,10 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
     module.exports = {
         init: function () {
             var href = location.href;
-            if (href.match(/^http:\/\/book\.douban\.com\/subject\/\d+/)) {
+            if (href.match(/^https?:\/\/book\.douban\.com\/subject\/\d+/)) {
                 initSubject();
             }
-            else if (href.match(/^http:\/\/read\.douban\.com\/ebook\/\d+/)) {
+            else if (href.match(/^https?:\/\/read\.douban\.com\/ebook\/\d+/)) {
                 initEbook();
             }
         }
@@ -13303,7 +13302,7 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
 // music musician page improve
 // http://music.douban.com/musician/:id
 //
-define('js/template', ['jquery'], function(require, exports, module) {
+define('js/template', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery');
@@ -13323,7 +13322,7 @@ define('js/template', ['jquery'], function(require, exports, module) {
 //
 // seajs  jquery
 //
-define('jquery', [], function (require, exports, module) {
+define('jquery', function (require, exports, module) {
     "use strict";
 
     module.exports = window.noConfictJQuery;
@@ -13332,7 +13331,7 @@ define('jquery', [], function (require, exports, module) {
 //
 // Mustache
 //
-define('mustache', [], function (require, exports, module) {
+define('mustache', function (require, exports, module) {
     "use strict";
 
     module.exports = window.Mustache;
@@ -13341,7 +13340,7 @@ define('mustache', [], function (require, exports, module) {
 //
 // purl
 //
-define('purl', [], function (require, exports, module) {
+define('purl', function (require, exports, module) {
     "use strict";
 
     module.exports = window.purl;
@@ -13350,7 +13349,7 @@ define('purl', [], function (require, exports, module) {
 //
 // async
 //
-define('async', [], function (require, exports, module) {
+define('async', function (require, exports, module) {
     "use strict";
 
     module.exports = window.async;

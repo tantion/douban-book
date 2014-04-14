@@ -1,7 +1,7 @@
 //
 // seajs  jquery
 //
-define('jquery', [], function (require, exports, module) {
+define('jquery', function (require, exports, module) {
     "use strict";
 
     module.exports = window.noConfictJQuery;
@@ -10,7 +10,7 @@ define('jquery', [], function (require, exports, module) {
 //
 // Mustache
 //
-define('mustache', [], function (require, exports, module) {
+define('mustache', function (require, exports, module) {
     "use strict";
 
     module.exports = window.Mustache;
@@ -19,7 +19,7 @@ define('mustache', [], function (require, exports, module) {
 //
 // purl
 //
-define('purl', [], function (require, exports, module) {
+define('purl', function (require, exports, module) {
     "use strict";
 
     module.exports = window.purl;
@@ -28,7 +28,7 @@ define('purl', [], function (require, exports, module) {
 //
 // async
 //
-define('async', [], function (require, exports, module) {
+define('async', function (require, exports, module) {
     "use strict";
 
     module.exports = window.async;

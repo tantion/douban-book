@@ -3,7 +3,7 @@
 //
 
 // 所有模块都通过 define 来定义
-define('js/main', ['jquery', 'lib/tipsy/jquery.tipsy.js'], function(require, exports, module) {
+define('js/main', function(require, exports, module) {
     "use strict";
 
     // 通过 require 引入依赖

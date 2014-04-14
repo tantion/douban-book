@@ -2,7 +2,7 @@
 // 皮皮书屋
 // http://www.ppurl.com
 //
-define('js/ppurl', ['jquery', 'mustache'], function(require, exports, module) {
+define('js/ppurl', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),

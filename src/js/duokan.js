@@ -2,7 +2,7 @@
 // 多看阅读
 // http://www.duokan.com
 //
-define('js/duokan', ['jquery', 'mustache'], function(require, exports, module) {
+define('js/duokan', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),

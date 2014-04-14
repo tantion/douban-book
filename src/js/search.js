@@ -2,8 +2,7 @@
 // book subject improve
 // http://book.douban.com/subject/:id
 //
-define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
-    function(require, exports, module) {
+define('js/search', function(require, exports, module) {
     "use strict";
 
     var $ = require('jquery'),
@@ -170,10 +169,10 @@ define('js/search', ['js/duokan', 'js/ishare', 'js/ppurl', 'js/baidu'],
     module.exports = {
         init: function () {
             var href = location.href;
-            if (href.match(/^http:\/\/book\.douban\.com\/subject\/\d+/)) {
+            if (href.match(/^https?:\/\/book\.douban\.com\/subject\/\d+/)) {
                 initSubject();
             }
-            else if (href.match(/^http:\/\/read\.douban\.com\/ebook\/\d+/)) {
+            else if (href.match(/^https?:\/\/read\.douban\.com\/ebook\/\d+/)) {
                 initEbook();
             }
         }
