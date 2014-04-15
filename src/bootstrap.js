@@ -1,4 +1,4 @@
-/*! douban-book-improve - v0.3.0 - 2014-04-15
+/*! douban-book-improve - v0.3.1 - 2014-04-15
 * https://github.com/tantion/douban-book
 * Copyright (c) 2014 tantion; Licensed MIT */
 (function(global, undefined) {
@@ -12591,7 +12591,7 @@ define('js/baidu', function(require, exports, module) {
     function searchTitle (title) {
         var dfd = new $.Deferred(),
             items = [],
-            url = 'http://www.baidu.com/s?wd=#keyword#%20pdf%20site%3Apan.baidu.com';
+            url = 'http://www.baidu.com/s?wd=intitle%3A%28"#keyword#"+"pdf"%29%20site%3A%28pan.baidu.com%29';
 
         url = url.replace('#keyword#', encodeURIComponent(title));
 

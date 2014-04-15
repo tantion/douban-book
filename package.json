@@ -1,7 +1,7 @@
 {
   "name": "douban-book-improve",
   "description": "让豆瓣读书支持下载或在线阅读电子书。",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "engines": {
     "node": ">= 0.10.0"
   },

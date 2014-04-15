@@ -13,7 +13,7 @@ define('js/baidu', function(require, exports, module) {
     function searchTitle (title) {
         var dfd = new $.Deferred(),
             items = [],
-            url = 'http://www.baidu.com/s?wd=#keyword#%20pdf%20site%3Apan.baidu.com';
+            url = 'http://www.baidu.com/s?wd=intitle%3A%28"#keyword#"+"pdf"%29%20site%3A%28pan.baidu.com%29';
 
         url = url.replace('#keyword#', encodeURIComponent(title));
 
