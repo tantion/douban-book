@@ -4,6 +4,10 @@ A chrome extension for Douban Movie
 
 ## Change Log
 
+- v0.3.2 - April 17 2014
+    - Added total count
+    - Fixed protalcal error
+
 - v0.2.0 - March 23 2014
     - read.douban.com/ebook/\d+ 添加打开入口
 

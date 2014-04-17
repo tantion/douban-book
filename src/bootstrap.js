@@ -1,4 +1,4 @@
-/*! douban-book-improve - v0.3.1 - 2014-04-17
+/*! douban-book-improve - v0.3.2 - 2014-04-17
 * https://github.com/tantion/douban-book
 * Copyright (c) 2014 tantion; Licensed MIT */
 (function(global, undefined) {
