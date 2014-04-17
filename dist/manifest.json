@@ -3,7 +3,7 @@
 
     "name": "豆瓣读书助手",
     "description": "让豆瓣读书支持下载或在线阅读电子书。",
-    "version": "0.3.2",
+    "version": "0.3.3",
 
     "permissions": [
         "webRequest",
