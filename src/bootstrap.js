@@ -1,4 +1,4 @@
-/*! douban-book-improve - v0.3.1 - 2014-04-15
+/*! douban-book-improve - v0.3.1 - 2014-04-17
 * https://github.com/tantion/douban-book
 * Copyright (c) 2014 tantion; Licensed MIT */
 (function(global, undefined) {
@@ -13127,6 +13127,7 @@ define('js/search', function(require, exports, module) {
     var $ = require('jquery'),
         dialog = null,
         m = require('mustache'),
+        async = require('async'),
         providers = [
             require('js/duokan'),
             require('js/ishare'),
@@ -13263,8 +13264,31 @@ define('js/search', function(require, exports, module) {
         dialog.open();
     }
 
+    function setTotalCount ($btn, total) {
+        var text = $btn.text() || '';
+        text = text.replace(/\(.+\)/, '(' + total + ')');
+        $btn.text(text);
+    }
+
+    function requestTotalCount ($btn, subject) {
+        var total = 0;
+        async.each(providers, function (provider, fun) {
+            provider
+            .search(subject)
+            .done(function (result, len) {
+                total += len;
+                setTotalCount($btn, total);
+            })
+            .always(function () {
+                fun();
+            });
+        }, function (err) {
+            setTotalCount($btn, total);
+        });
+    }
+
     function initSubject () {
-        var $btn = $('<div><span class="pl">电子书:</span> <a href="javascript:">查看列表</a></div>')
+        var $btn = $('<div><span class="pl">电子书:</span> <a href="javascript:">打开列表 (..)</a></div>')
                    .appendTo('#info').find('a'),
             subject = serializeSubject();
 
@@ -13272,10 +13296,12 @@ define('js/search', function(require, exports, module) {
             evt.preventDefault();
             openDialog(subject);
         });
+
+        requestTotalCount($btn, subject);
     }
 
     function initEbook () {
-        var $btn = $('<p><span class="label">电子书</span><a href="javascript:">查看列表</a></p>')
+        var $btn = $('<p><span class="label">电子书</span><a href="javascript:">打开列表 (..)</a></p>')
                    .appendTo('.article-meta').find('a').css({fontSize: '12px'}),
             subject = serializeEbook();
 
@@ -13283,6 +13309,8 @@ define('js/search', function(require, exports, module) {
             evt.preventDefault();
             openDialog(subject);
         });
+
+        requestTotalCount($btn, subject);
     }
 
     module.exports = {
