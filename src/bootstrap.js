@@ -12591,7 +12591,7 @@ define('js/baidu', function(require, exports, module) {
     function searchTitle (title) {
         var dfd = new $.Deferred(),
             items = [],
-            url = 'http://www.baidu.com/s?wd=site%3A%28pan.baidu.com%29+title%3A+%28+"#keyword#"%2B%28pdf+%7C+mobi+%7C+epub+%7C+txt%29%29';
+            url = 'http://www.baidu.com/s?wd=title%3A+%28+"#keyword#"%2B%28pdf+%7C+mobi+%7C+epub+%7C+txt%29%29+site%3A%28pan.baidu.com%29';
 
         url = url.replace('#keyword#', encodeURIComponent(title));
 
@@ -12628,7 +12628,7 @@ define('js/baidu', function(require, exports, module) {
                     if (!matches) {
                         matches = title.match(/下载\(([\w\.]+)\)/);
                     }
-                    title = $.trim($link.text()).replace(/^(.+)_免费高速下载.*$/, '$1');
+                    title = $.trim($link.text()).replace(/^(.+)_免费高速.*$/, '$1');
 
                     if (matches && matches.length > 1) {
                         size = matches[1];
