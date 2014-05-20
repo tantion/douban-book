@@ -43,14 +43,22 @@ define('js/baidu', function(require, exports, module) {
                     var $item = $(this),
                         $link = $item.find('.t a').eq(0),
                         $desc = $item.find('.c-abstract').eq(0),
-                        title = $.trim($desc.text()),
+                        desc = $.trim($desc.text()),
+                        title = $.trim($link.text()).replace(/^(.+)_免费高速.*$/, '$1'),
                         size = '',
-                        matches = title.match(/文件大小:([\w\.]+) /);
+                        descTitle = '',
+                        matches = desc.match(/文件大小:([\w\.]+) /);
 
                     if (!matches) {
-                        matches = title.match(/下载\(([\w\.]+)\)/);
+                        matches = desc.match(/下载\(([\w\.]+)\)/);
                     }
-                    title = $.trim($link.text()).replace(/^(.+)_免费高速.*$/, '$1');
+
+                    if (title.indexOf('...') === 0) {
+                        descTitle = desc.match(/(.+) 保存至网盘/);
+                        if (descTitle) {
+                            title = descTitle[1];
+                        }
+                    }
 
                     if (matches && matches.length > 1) {
                         size = matches[1];
@@ -58,7 +66,6 @@ define('js/baidu', function(require, exports, module) {
                             title += ' ' + size;
                         }
                     }
-
                     if (title) {
                         items.push({
                             href: $link.attr('href'),
