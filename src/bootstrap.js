@@ -1,4 +1,4 @@
-/*! douban-book-improve - v0.3.4 - 2014-05-20
+/*! douban-book-improve - v0.3.4 - 2014-07-04
 * https://github.com/tantion/douban-book
 * Copyright (c) 2014 tantion; Licensed MIT */
 (function(global, undefined) {
@@ -13139,9 +13139,9 @@ define('js/search', function(require, exports, module) {
         async = require('async'),
         providers = [
             require('js/duokan'),
-            require('js/ishare'),
-            require('js/ppurl'),
-            require('js/baidu')
+            //require('js/ishare'),
+            require('js/ppurl')
+            //require('js/baidu')
         ];
 
     function serializeSubject () {

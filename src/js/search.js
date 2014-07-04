@@ -11,9 +11,9 @@ define('js/search', function(require, exports, module) {
         async = require('async'),
         providers = [
             require('js/duokan'),
-            require('js/ishare'),
-            require('js/ppurl'),
-            require('js/baidu')
+            //require('js/ishare'),
+            require('js/ppurl')
+            //require('js/baidu')
         ];
 
     function serializeSubject () {
